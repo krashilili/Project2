@@ -8,4 +8,17 @@
 
 4. You may choose a project of any theme, but we encourage you to think broadly. The universe is wide and expansive. Don't limit yourself to what you know. 
 
-5. You will have roughly two weeks to complete this project. You will present your final work on Saturday (Aug 25, 2018). You will have ample time in class to work with your group (but expect to put in some long nights in the days ahead).
+5. You will have roughly two weeks to complete this project. You will present your final work on Saturday (Aug 25, 2018). You will have ample time in class to work with your group (but expect to put in some long nights in the days ahead).   
+
+### Project Requirements
+1. Your visualization must include a Python Flask powered RESTful API, HTML/CSS, JavaScript and at least one database (MySQL, MongoDB, SQLite, etc.)   
+
+2. You will make a dashboard using some combination of D3, Leaflet and Plotly, which shows multiple visualizations of related data.   
+
+3. Your project may include JS libraries that we did not cover.   
+
+4. Your project must be powered by a dataset with at least 100 records of raw data.   
+
+5. Your project must include some level of user-driven interaction (e.g. menus, dropdowns, textboxes, etc.)   
+
+6. Your final dashboard should ideally include at least three views
