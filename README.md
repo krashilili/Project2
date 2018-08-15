@@ -23,4 +23,6 @@
 
 6. Your final dashboard should ideally include at least three views
 
-Bonus: we will attempt to deploy our app to Heroku.
+***
+
+<b>Bonus:</b> we will attempt to deploy our app to Heroku.
