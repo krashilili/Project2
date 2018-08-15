@@ -25,4 +25,4 @@
 
 ***
 
-<b>Bonus:</b> we will attempt to deploy our app to Heroku.
+<b>Bonus:</b> We will attempt to deploy our app to Heroku.
