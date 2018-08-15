@@ -22,3 +22,5 @@
 5. Your project must include some level of user-driven interaction (e.g. menus, dropdowns, textboxes, etc.)   
 
 6. Your final dashboard should ideally include at least three views
+
+Bonus: we will attempt to deploy our app to Heroku.
