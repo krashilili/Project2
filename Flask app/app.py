@@ -32,11 +32,12 @@ marriage_rate_metadata = Base.classes.marriage_rates
 
 @app.route("/metadata/<year>")
 def marriage_rates_by_year(year):
-    # sel = [
-    #     marriage_rate_metadata
-    # ]
+    sel = [
+        marriage_rate_metadata.State,
+        marriage_rate_metadata.Y_2016
+    ]
 
-    results = db.session.query({}).all()
+    results = db.session.query(*sel).all()
     print(results)
 
 
