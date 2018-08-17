@@ -34,12 +34,18 @@ marriage_rate_metadata = Base.classes.marriage_rates
 def marriage_rates_by_year(year):
     sel = [
         marriage_rate_metadata.State,
-        # marriage_rate_metadata.Y_2016,
         getattr(marriage_rate_metadata, 'Y_'+year)
     ]
 
     results = db.session.query(*sel).all()
-    print(results)
+
+    # Format the data to send as json
+    data = {
+        "states": [result[0] for result in results],
+        "marriage_rates": [result[1] for result in results]
+    }
+
+    return jsonify(data)
 
 
 if __name__ == "__main__":
