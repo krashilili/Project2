@@ -34,7 +34,8 @@ marriage_rate_metadata = Base.classes.marriage_rates
 def marriage_rates_by_year(year):
     sel = [
         marriage_rate_metadata.State,
-        marriage_rate_metadata.Y_2016
+        # marriage_rate_metadata.Y_2016,
+        getattr(marriage_rate_metadata, 'Y_'+year)
     ]
 
     results = db.session.query(*sel).all()
