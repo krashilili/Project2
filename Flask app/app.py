@@ -17,8 +17,8 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-engine = create_engine('sqlite://', echo=False)
+engine = create_engine('sqlite://db/marriage_rates.db', echo=False)
 
-df = pd.read_csv('resource/state_marriage_rates_90_95_99-16.csv')
+
 
 
