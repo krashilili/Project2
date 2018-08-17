@@ -17,7 +17,7 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/marraige_rates.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/marriage_rates.sqlite"
 db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
@@ -26,12 +26,19 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Samples_Metadata = Base.classes.sample_metadata
-Samples = Base.classes.samples
+marriage_rate_metadata = Base.classes.marriage_rates
+# Samples = Base.classes.samples
 
 
 @app.route("/metadata/<year>")
 def marriage_rates_by_year(year):
-    
+    sel = [
+        marriage_rate_metadata.2016
+    ]
+
+    results = db.session.query(*sel).all()
+    print(results)
 
 
+if __name__ == "__main__":
+    app.run()
