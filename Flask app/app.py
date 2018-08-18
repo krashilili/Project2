@@ -29,6 +29,36 @@ Base.prepare(db.engine, reflect=True)
 marriage_rate_metadata = Base.classes.marriage_rates
 # Samples = Base.classes.samples
 
+@app.route("/")
+def index():
+    """Return the homepage."""
+    return render_template("index.html")
+
+"""@app.route("/states")
+def states():
+    Return a list of states.
+
+    # Use Pandas to perform the sql query
+    stmt = db.session.query(marriage_rate_metadata).statement
+    df = pd.read_sql_query(stmt, db.session.bind)
+
+    # Return a list of values in the state column
+    return.jsonify(data)"""
+
+@app.route("/states")
+def states():
+    """Return a list of state names."""
+
+    sel = [
+        marriage_rate_metadata.State
+    ]
+
+    results = db.session.query(*sel).all()
+
+    # Format the data to send as json
+    data = {[result[0] for result in results]}
+
+    return jsonify(data)
 
 @app.route("/metadata/<year>")
 def marriage_rates_by_year(year):
