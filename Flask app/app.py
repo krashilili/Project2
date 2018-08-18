@@ -34,33 +34,8 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
-"""@app.route("/states")
-def states():
-    Return a list of states.
 
-    # Use Pandas to perform the sql query
-    stmt = db.session.query(marriage_rate_metadata).statement
-    df = pd.read_sql_query(stmt, db.session.bind)
-
-    # Return a list of values in the state column
-    return.jsonify(data)"""
-
-@app.route("/states")
-def states():
-    """Return a list of state names."""
-
-    sel = [
-        marriage_rate_metadata.State
-    ]
-
-    results = db.session.query(*sel).all()
-
-    # Format the data to send as json
-    data = {[result[0] for result in results]}
-
-    return jsonify(data)
-
-@app.route("/metadata/<year>")
+@app.route("/metadata/year/<year>")
 def marriage_rates_by_year(year):
     sel = [
         marriage_rate_metadata.State,
@@ -73,6 +48,23 @@ def marriage_rates_by_year(year):
     data = {
         "states": [result[0] for result in results],
         "marriage_rates": [result[1] for result in results]
+    }
+
+    return jsonify(data)
+
+
+@app.route("/metadata/state/<state>")
+def marriage_rates_by_state(state):
+
+    stmt = db.session.query(marriage_rate_metadata).statement
+    df = pd.read_sql_query(stmt, db.session.bind)
+
+    sample_data = df.loc[df['State'] == state, :]
+    years = [ year.split('_')[-1] for year in sample_data.columns.values[2:]]
+    marriage_rates = sample_data.values[0][2:]
+    data = {
+        'year': years,
+        'marriage_rates': marriage_rates.tolist()
     }
 
     return jsonify(data)
