@@ -34,8 +34,6 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
-
-
 @app.route("/metadata/year/<year>")
 def marriage_rates_by_year(year):
     sel = [
@@ -52,7 +50,6 @@ def marriage_rates_by_year(year):
     }
 
     return jsonify(data)
-
 
 @app.route("/metadata/state/<state>")
 def marriage_rates_by_state(state):
