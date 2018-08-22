@@ -24,23 +24,46 @@
           <h5>SELECT State:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
-       
-      </div>
-      <div class="col-md-12">
-        <div id="map"></div>
-      </div>
-      <div class="col-md-12">
-        <div id="line"></div>
-      </div>
+       </div>
+
+    <!-- Marriage visualizations -->
+    <div class="row">
+    <div class="col-md-12">
+      <div id="line"></div>
     </div>
-  </div>
+    </div>
+    </div>
+
+
   <div class="row">
     <div class="col-md-12">
       <div id="bar"></div>
     </div>
   </div>
 
-  <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
+ <!-- Divorce visualizations -->
+  <div class="row">
+  <div class="col-md-12">
+    <div id="divorce-line"></div>
+  </div>
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="divorce-bar"></div>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="map"></div>
+    </div>
+  </div>
+
+</div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
