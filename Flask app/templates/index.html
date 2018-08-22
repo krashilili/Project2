@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>US Marriage Rates</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.min.css">
+    <link href="{{ url_for('static', filename='css/map.css') }}" rel="stylesheet">
 
 </head>
 
@@ -47,17 +48,17 @@
 
 
 
+{#<script src="{{ url_for('static', filename='js/map.js') }}"></script>#}
+<!-- Load d3-geomap library-->
+
 <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="{{ url_for('static', filename='js/map2.js') }}"></script>
 
-<!-- Load d3-geomap library-->
-<link href="{{ url_for('static', filename='d3-geomap-1.0.2/css/d3.geomap.css')}}" rel="stylesheet">
-<script src="{{ url_for('static', filename='d3-geomap-1.0.2/vendor/d3.geomap.dependencies.min.js')}}"></script>
-<script src="{{ url_for('static', filename='d3-geomap-1.0.2/js/d3.geomap.min.js')}}"></script>
-
-<script src="{{ url_for('static', filename='js/map.js') }}"></script>
 </body>
 
 </html>

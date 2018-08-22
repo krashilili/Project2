@@ -6,7 +6,9 @@ var map = d3.geomap.choropleth()
     .scale(1000)
     .legend(true);
 
-d3.csv('capital.csv', function(error, data) {
+d3.csv('static/js/stateslived.csv', function(error, data) {
+    console.log("map data");
+    console.log(data);
     d3.select('#map')
         .datum(data)
         .call(map.draw, map);
