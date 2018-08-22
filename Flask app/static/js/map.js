@@ -1,5 +1,5 @@
 var map = d3.geomap.choropleth()
-    .geofile('/d3-geomap/topojson/countries/USA.json')
+    .geofile('static/d3-geomap-1.0.2/topojson/countries/USA.json')
     .projection(d3.geo.albersUsa)
     .column('2012')
     .unitId('fips')

@@ -1,7 +1,7 @@
 function buildCharts(state) {
     // TO DO: Iterate through all states
     d3.json(`/metadata/state/${state}`).then(function(stateData) {
-        console.log(state)
+        console.log(state);
 
         // Cast rates as numbers
         console.log('state data', stateData);
@@ -19,7 +19,7 @@ function buildCharts(state) {
             yaxis: { title: "Marriage Rate"}
         };
         
-        Plotly.newPlot("line", data, layout);
+        Plotly.newPlot("#line", data, layout);
     });
 
     // Build map with static data from 2016
