@@ -1,8 +1,10 @@
 function buildCharts() {
     // TO DO: Iterate through all states
-    d3.json(`/metadata/state/Alabama`).then(function(stateData) {
-        console.log('state data', stateData);
+    d3.json(`/metadata/state/${state}`).then(function(stateData) {
         
+        // Cast rates as numbers
+        console.log('state data', stateData);
+
         // Build line chart
         // Define SVG area dimensions
 		var svgWidth = 960;
@@ -30,9 +32,6 @@ function buildCharts() {
         var chartGroup = svg.append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-        // Cast rates as numbers
-        stateData.marriage_rates = +stateData.marriage_rates
-
         // Configure a time scale
 		// d3.extent returns the an array containing the min and max values for the property specified
 		var xLinearScale = d3.scaleTime()
@@ -46,7 +45,7 @@ function buildCharts() {
 
         // Create two new functions passing the scales in as arguments
         // These will be used to create the chart's axes
-        var bottomAxis = d3.axisBottom(xTimeScale);
+        var bottomAxis = d3.axisBottom(xLinearScale);
         var leftAxis = d3.axisLeft(yLinearScale);
 
         // Configure a line function which will plot the x and y coordinates using our scales
@@ -72,7 +71,22 @@ function buildCharts() {
             .attr("transform", `translate(0, ${chartHeight})`)
             .call(bottomAxis);
             
-        // Build bar chart
+        /*// Build bar chart
+        // Select bar, append SVG area to it, and set the dimensions
+        var svg = d3.select("#bar")
+            .append("svg")
+            .attr("height", svgHeight)
+            .attr("width", svgWidth);
+
+        // Append a group to the SVG area and shift ('translate') it to the right and to the bottom
+        var chartGroup = svg.append("g")
+            .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
+
+        // Configure a band scale for the horizontal axis with a padding of 0.1 (10%)
+        var xBandScale = d3.scaleBand()
+		    .domain(stateData.map(d => d.name))
+		    .range([0, chartWidth])
+            .padding(0.1);*/
     });
 
     // Build map with static data from 2016
