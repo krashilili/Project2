@@ -67,8 +67,6 @@ def marriage_rates_by_state(state):
 
     return jsonify(data)
 
-
-
 @app.route("/states")
 def states():
     sel = [marriage_rate_metadata.State]
@@ -76,7 +74,6 @@ def states():
     states = [state[0] for state in db.session.query(*sel).all()]
 
     return jsonify(states)
-
 
 if __name__ == "__main__":
     app.run()

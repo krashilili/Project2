@@ -1,12 +1,11 @@
 function buildCharts(state) {
     // TO DO: Iterate through all states
     d3.json(`/metadata/state/${state}`).then(function(stateData) {
+        // Log data from selected state
         console.log(state)
-
-        // Cast rates as numbers
         console.log('state data', stateData);
         
-        // Part 2 - Adding attributes
+        // Build line chart
 	    var trace1 = {
             x: stateData.year,
             y: stateData.marriage_rates,
@@ -14,17 +13,30 @@ function buildCharts(state) {
             };
             var data = [trace1];
             var layout = {
-            title: "Marriage Rates",
+            title: `${state} Marriage Rates`,
             xaxis: { title: "Year"},
             yaxis: { title: "Marriage Rate"}
         };
-        
-        Plotly.newPlot("line", data, layout);
+        Plotly.newPlot("line", data, layout);        
     });
 
     // Build map with static data from 2016
     d3.json(`/metadata/year/2016`).then(function(yearData) {
-        console.log('2016 data', yearData)
+        console.log('Year data', yearData)
+
+        // Build bar chart
+        var trace2 = {
+            x: yearData.states,
+            y: yearData.marriage_rates,
+            type: "bar"
+            };
+            var data = [trace2];
+            var layout = {
+            title: "2016 Marriage Rates",
+            xaxis: { title: "State"},
+            yaxis: { title: "Marriage Rate"}
+        };
+        Plotly.newPlot("bar", data, layout);
     });
     
 };
