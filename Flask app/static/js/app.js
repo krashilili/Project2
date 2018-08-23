@@ -10,9 +10,9 @@ function buildCharts(state) {
             x: stateData.year,
             y: stateData.marriage_rates,
             type: "line"
-            };
-            var data = [trace1];
-            var layout = {
+        };
+        var data = [trace1];
+        var layout = {
             title: `${state} Marriage Rates`,
             xaxis: { title: "Year"},
             yaxis: { title: "Marriage Rate"}
@@ -25,18 +25,59 @@ function buildCharts(state) {
         console.log('Year data', yearData)
 
         // Build bar chart
-        var trace2 = {
-            x: yearData.states,
-            y: yearData.marriage_rates,
-            type: "bar"
+        var myPlot = document.getElementById('bar'),
+            data = [{
+                x: yearData.states,
+                y: yearData.marriage_rates,
+                type: "bar",
+                marker: {
+                    color: 'light blue'
+                }
+            }];
+            layout = {
+                title: "2016 Marriage Rates",
+                /*xaxis: { title: "State",
+                    titlefont: 18,
+                },*/
+                yaxis: {title: "Marriage Rate"},
+                hovermode: 'closest'
             };
-            var data = [trace2];
-            var layout = {
-            title: "2016 Marriage Rates",
-            xaxis: { title: "State"},
-            yaxis: { title: "Marriage Rate"}
-        };
+
         Plotly.newPlot("bar", data, layout);
+        
+        myPlot.on('plot_click', function(){
+            alert('You clicked this Plotly chart')
+        });
+
+        /*myPlot.on('plotly_hover', function(data){
+            var pn='',
+                tn='',
+                colors=[];
+            for(var i=0; i < data.points.length; i++){
+                pn = data.points[i].pointNumber;
+                tn = data.points[i].curveNumber;
+                colors = data.points[i].data.marker.color;
+            };
+            colors[pn] = '#C54C82';
+
+            var update = {'marker':{color: colors, size:16}};
+            Plotly.restyle('bar', update, [tn]);
+        });
+
+        myPlot.on('plotly_unhover', function(data){
+            var pn='',
+                tn='',
+                colors=[];
+            for(var i=0; i < data.points.length; i++){
+                pn = data.points[i].pointNumber;
+                tn = data.points[i].curveNumber;
+                colors = data.points[i].data.marker.color;
+            };
+            colors[pn] = '#00000';
+
+            var update = {'marker':{color: colors, size:16}};
+            Plotly.restyle('bar', update, [tn]);
+        });*/
     });
     
 };
