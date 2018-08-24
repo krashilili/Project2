@@ -44,12 +44,10 @@ function buildCharts(state) {
             };
 
         Plotly.newPlot("bar", data, layout);
-        
-        myPlot.on('plot_click', function(){
-            alert('You clicked this Plotly chart')
+        console.log('myPlot',myPlot);
         });
 
-        /*myPlot.on('plotly_hover', function(data){
+        /*myPlot.on('plotly_unhover', function(data){
             var pn='',
                 tn='',
                 colors=[];
@@ -58,27 +56,11 @@ function buildCharts(state) {
                 tn = data.points[i].curveNumber;
                 colors = data.points[i].data.marker.color;
             };
-            colors[pn] = '#C54C82';
-
-            var update = {'marker':{color: colors, size:16}};
-            Plotly.restyle('bar', update, [tn]);
-        });
-
-        myPlot.on('plotly_unhover', function(data){
-            var pn='',
-                tn='',
-                colors=[];
-            for(var i=0; i < data.points.length; i++){
-                pn = data.points[i].pointNumber;
-                tn = data.points[i].curveNumber;
-                colors = data.points[i].data.marker.color;
-            };
-            colors[pn] = '#00000';
+            colors[pn] = 'light blue';
 
             var update = {'marker':{color: colors, size:16}};
             Plotly.restyle('bar', update, [tn]);
         });*/
-    });
     
 };
 
@@ -106,6 +88,31 @@ function init() {
 function optionChanged(newState) {
     // Fetch new data each time a new state is selected
     buildCharts(newState);
-}
+};
+
+function makeResponsive() {
+    var myPlot = d3.select('#bar');
+    console.log(myPlot);
+
+    myPlot.on('plot_click', function(){
+        alert('You clicked this Plotly chart')
+    });
+
+    /*myPlot.on('plotly_hover', function(data){
+        var pn='',
+            tn='',
+            colors=[];
+        for(var i=0; i < data.points.length; i++){
+            pn = data.points[i].pointNumber;
+            tn = data.points[i].curveNumber;
+            colors = data.points[i].data.marker.color;
+        };
+        colors[pn] = 'red';
+
+        var update = {'marker':{color: colors, size:16}};
+        Plotly.restyle('bar', update, [tn]);*/
+};
+
+makeResponsive();
 
 init();
