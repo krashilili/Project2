@@ -1,13 +1,17 @@
-//Width and height of map
-var width = 960;
-var height = 500;
+
+var svgWidth = 960;
+var svgHeight = 500;
 
 var margin = {
-    top: 50,
-    right: 50,
-    bottom: 50,
-    left: 50
-  };
+  top: 20,
+  right: 40,
+  bottom: 20,
+  left: 100
+};
+
+var width = svgWidth - margin.left - margin.right;
+var height = svgHeight - margin.top - margin.bottom;
+
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -20,97 +24,179 @@ var path = d3.geo.path()               // path generator that will convert GeoJS
 
 
 // Define linear scale for output
-var color = d3.scale.linear()
-			  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
+// var color1 = d3.scale.linear()
+// 			  .range(["#ebfaeb",
+//                   "#c2f0c2",
+//                   "#99e699",
+//                   "#5cd65c",
+//                   "#33cc33",
+//                   "#29a329",
+//                   "#0f3d0f"]);
 
-var legendText = ["Cities Lived", "States Lived", "States Visited", "Nada"];
+var color = function scale(d) {
+        return d < 1 ? '#ebfaeb' :
+                d < 2  ? '#c2f0c2' :
+                  d < 4  ? '#99e699' :
+                    d < 6  ? '#5cd65c' :
+                        d < 8  ? '#33cc33' :
+                            d< 10 ? '#29a329':
+                                '#145214'
+    };
 
-//Create SVG element and append map to the SVG
-var svg = d3.select("body")
-			.append("svg")
-			.attr("width", width)
-			.attr("height", height);
+// var colors = ['#ebfaeb', '#c2f0c2','#99e699', '#5cd65c','#33cc33','#29a329','#145214'];
+var colorsRange = [0,1,2,4,6,8,10];
+var legendText = ["0-1","1-2","2-4","4-6","6-8","8-10",">10"];
+
 
 // Append Div for tooltip to SVG
 var toolTip = d3.select("body")
-		    .append("div")
-    		.attr("class", "tooltip")
-    		.style("opacity", 0);
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 
-// Load in my states data!
-var marriageRatesAndStatesUrl = '/metadata/year/2016';
-d3.json(marriageRatesAndStatesUrl, function(data) {
-    console.log('state data', data);
-    var marriage_rates = data.marriage_rates;
-    var states = data.state;
 
-    color.domain([0, 1, 2, 3]); // setting the range of the input data
+function buildMap(year) {
+    // Remove older SVG
+    d3.select("#map svg").remove();
+    d3.select(".legend").remove();
 
-// Load GeoJSON data and merge with states data
-    var usMapUrl = "https://gist.githubusercontent.com/michellechandra/0b2ce4923dc9b5809922/raw/a476b9098ba0244718b496697c5b350460d32f99/us-states.json";
-    d3.json(usMapUrl, function (json) {
-        console.log('json state', json);
-        // Loop through each state data value in the .csv file
-        for (var i = 0; i < data.states.length; i++) {
+    //Create SVG element and append map to the SVG
+    var svg = d3.select("#map")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-            // Grab State Name
-            var dataState = data.states[i];
+    // Load in my states data!
+    var marriageRatesAndStatesUrl = `/metadata/year/${year}`;
+    d3.json(marriageRatesAndStatesUrl, function (data) {
+        console.log('state data', data);
+        var marriage_rates = data.marriage_rates;
+        var states = data.state;
 
-            // Grab data value
-            var dataValue = data.marriage_rates[i];
+        // color.domain([0, 2, 4, 6, 8, 10, 100]); // setting the range of the input data
 
-            // Find the corresponding state inside the GeoJSON
-            for (var j = 0; j < json.features.length; j++) {
-                var jsonState = json.features[j].properties.name;
+        // Load GeoJSON data and merge with states data
+        var usMapUrl = "https://gist.githubusercontent.com/michellechandra/0b2ce4923dc9b5809922/raw/a476b9098ba0244718b496697c5b350460d32f99/us-states.json";
+        d3.json(usMapUrl, function (json) {
+            console.log('json state', json);
+            // Loop through each state data value in the .csv file
+            for (var i = 0; i < data.states.length; i++) {
 
-                if (dataState == jsonState) {
+                // Grab State Name
+                var dataState = data.states[i];
 
-                    // Copy the data value into the JSON
-                    json.features[j].properties.marriage_rates = dataValue;
+                // Grab data value
+                var dataValue = data.marriage_rates[i];
 
-                    // Stop looking through the JSON
-                    break;
+                // Find the corresponding state inside the GeoJSON
+                for (var j = 0; j < json.features.length; j++) {
+                    var jsonState = json.features[j].properties.name;
+
+                    if (dataState == jsonState) {
+
+                        // Copy the data value into the JSON
+                        json.features[j].properties.marriage_rates = dataValue;
+
+                        // Stop looking through the JSON
+                        break;
+                    }
                 }
             }
-        }
 
-        // Bind the data to the SVG and create one path per GeoJSON feature
+            // Bind the data to the SVG and create one path per GeoJSON feature
 
-        svg.selectAll("path")
-            .data(json.features)
-            .enter()
-            .append("path")
-            .attr("d", path)
-            .style("stroke", "#fff")
-            .style("stroke-width", "1")
-            .style("fill", function(d) {
-                var value = d.properties.marriage_rates;
+            svg.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("stroke", "#fff")
+                .style("stroke-width", "1")
+                .style("fill", function (d) {
+                    var value = d.properties.marriage_rates;
 
-                if (value) {
-                    //If value exists…
-                    return color(value);
-                } else {
-                    //If value is undefined…
-                    return "rgb(213,222,217)";
-                }
-            })
-            .on("mouseover", function(d) {
-                toolTip.transition()
-                    .duration(200)
-                    .style("opacity", .9);
-                toolTip.html(`<strong>${d.properties.name}</strong>
-							<p>${d.properties.marriage_rates}</p>`)
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-            })
+                    if (value) {
+                        //If value exists…
+                        return color(value);
+                    } else {
+                        //If value is undefined…
+                        return "rgb(213,222,217)";
+                    }
+                })
+                .on("mouseover", function (d) {
+                    toolTip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    toolTip.html(`<strong>${d.properties.name}</strong>
+                                <p>${d.properties.marriage_rates}</p>`)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
 
-            // fade out tooltip on mouse out
-            .on("mouseout", function(d) {
-                toolTip.transition()
-                    .duration(500)
-                    .style("opacity", 0);
+                // fade out tooltip on mouse out
+                .on("mouseout", function (d) {
+                    toolTip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+            var legend = d3.select("#map").append("svg")
+                .attr("class", "legend")
+                .attr("width", 140)
+                .attr("height", 200)
+                .selectAll("g")
+                .data(colorsRange)
+                .enter()
+                .append("g")
+                .attr("transform", function (d, i) {
+                    return "translate(0," + i * 20 + ")";
+                });
+
+            legend.append("rect")
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", color);
+
+            legend.append("text")
+                .data(legendText)
+                .attr("x", 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .text(function (d) {
+                    return d;
+                });
+
+        });
+    });
+
+}
+
+
+function init() {
+
+    // Set up the dropdown menu
+    // Grab a reference to the dropdown select element
+    var selector = d3.select("#selYear");
+
+    // Use the list of sample names to populate the select options
+    d3.json("/years", years => {
+            years.forEach((instance) => {
+            selector
+            .append("option")
+            .text(instance)
+            .property("value", instance);
             });
 
+        // Use Alabama to build the initial plot
+        const defaultYear = years[0];
+        buildMap(defaultYear);
     });
-});
+}
+
+function yearChanged(newYear) {
+    // Fetch new data each time a new state is selected
+    buildMap(newYear);
+}
+
+init();

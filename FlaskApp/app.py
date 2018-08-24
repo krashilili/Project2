@@ -98,5 +98,19 @@ def states():
 
     return jsonify(states)
 
+
+@app.route("/years")
+def years():
+    stmt = db.session.query(marriage_rate_metadata).statement
+
+    df = pd.read_sql_query(stmt, db.session.bind)
+
+    sample_data = df.loc[:,:]
+
+    years = [year.split('_')[-1] for year in sample_data.columns.values[2:]]
+
+    return jsonify(years)
+
+
 if __name__ == "__main__":
     app.run()
