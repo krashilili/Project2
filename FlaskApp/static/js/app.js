@@ -12,7 +12,8 @@ function buildCharts(state) {
 	    var trace1 = {
             x: stateData.year,
             y: stateData.marriage_rates,
-            type: "line"
+            type: "line",
+            text: 'Counts per 1,000'
         };
         var data = [trace1];
         var layout = {
@@ -37,7 +38,8 @@ function buildCharts(state) {
                 type: "bar",
                 marker: {
                     color: 'light blue'
-                }
+                },
+                text: 'Counts per 1,000',
             }];
             layout = {
                 title: "2016 Marriage Rates",
