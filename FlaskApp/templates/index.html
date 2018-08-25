@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>US Marriage Rates</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/d3Style.css')}}">
     <link href="{{ url_for('static', filename='css/map.css') }}" rel="stylesheet">
 
 </head>
@@ -62,25 +63,32 @@
         <!-- Marriage visualizations -->
     </div>
 
+    <div class="row">
+      <div class="col-xs-12  col-md-9">
+        <button id="party">Party split</button>
+        <button id="combine">Combine</button>
+        <div id="bubble">
+          <!-- We append our chart here. -->
+        </div>
+      </div>
+    </div>
+
    
 </div>
 
 
 
-{#<script src="{{ url_for('static', filename='js/map.js') }}"></script>#}
-<!-- Load d3-geomap library-->
-
-<!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-{#<script src="http://d3js.org/d3.v3.min.js"></script>#}
 <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.0.0/d3.min.js"></script>#}
 
 
 <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{#<script src="{{ url_for('static', filename='js/bubble.js') }}"></script>#}
 
 </body>
 
