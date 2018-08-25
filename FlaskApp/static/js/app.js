@@ -41,48 +41,17 @@ function buildCharts(state) {
             }];
             layout = {
                 title: "2016 Marriage Rates",
-                /*xaxis: { title: "State",
-                    titlefont: 18,
-                },*/
+                xaxis: { 
+                    tickangle: 40,
+                    tickfont: {
+                        size: 9.5
+                    }
+                },
                 yaxis: {title: "Marriage Rate"},
                 hovermode: 'closest'
             };
 
         Plotly.newPlot("bar", data, layout);
-        
-        myPlot.on('plot_click', function(){
-            alert('You clicked this Plotly chart')
-        });
-
-        /*myPlot.on('plotly_hover', function(data){
-            var pn='',
-                tn='',
-                colors=[];
-            for(var i=0; i < data.points.length; i++){
-                pn = data.points[i].pointNumber;
-                tn = data.points[i].curveNumber;
-                colors = data.points[i].data.marker.color;
-            };
-            colors[pn] = '#C54C82';
-
-            var update = {'marker':{color: colors, size:16}};
-            Plotly.restyle('bar', update, [tn]);
-        });
-
-        myPlot.on('plotly_unhover', function(data){
-            var pn='',
-                tn='',
-                colors=[];
-            for(var i=0; i < data.points.length; i++){
-                pn = data.points[i].pointNumber;
-                tn = data.points[i].curveNumber;
-                colors = data.points[i].data.marker.color;
-            };
-            colors[pn] = '#00000';
-
-            var update = {'marker':{color: colors, size:16}};
-            Plotly.restyle('bar', update, [tn]);
-        });*/
 
     });
     
