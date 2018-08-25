@@ -54,6 +54,10 @@
   border-radius: 4px;
 }
 
+
+#bubble-mr{
+  margin-left: 45px;
+}
 /* Mobile Rules */
 @media screen and (max-width: 530px) {
   .stateText {
