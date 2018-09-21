@@ -1,4 +1,5 @@
-# Project 2  
+# Data Visualization Project - US Marriage Rates
+
 ### Live Demo  
 [Heroku App](https://marriage-rates.herokuapp.com/)  
 
